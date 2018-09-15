@@ -4,3 +4,9 @@
 [submodule "TinygramGCP"]
 	path = TinygramGCP
 	url = https://github.com/Paulalex85/TinygramGCP
+[submodule "Algo-AABRR"]
+	path = Algo-AABRR
+	url = https://github.com/Paulalex85/Algo-AABRR
+[submodule "app-suivi-alimentaire"]
+	path = app-suivi-alimentaire
+	url = https://github.com/AnasseZ/app-suivi-alimentaire
