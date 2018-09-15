@@ -1,0 +1,6 @@
+[submodule "IRC-C"]
+	path = IRC-C
+	url = https://github.com/Paulalex85/IRC-C
+[submodule "TinygramGCP"]
+	path = TinygramGCP
+	url = https://github.com/Paulalex85/TinygramGCP
