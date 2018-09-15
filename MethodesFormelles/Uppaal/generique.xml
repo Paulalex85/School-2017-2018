@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+chan appel,reponse;
+clock temps;
+const int n = 4; //nombre de gossip
+int ech;</declaration>
+	<template>
+		<name x="5" y="5">Gossip</name>
+		<parameter>int index</parameter>
+		<declaration>// Place local declarations here.
+int tab = 0;
+clock attente;
+
+void initialize()
+{
+    tab = 1 &lt;&lt;index;
+}
+
+void envoie() 
+{
+    ech = tab;
+}
+
+void recoie()
+{
+    tab = tab | ech;
+}</declaration>
+		<location id="id0" x="68" y="-68">
+			<name x="102" y="-76">AttenteFinAppel</name>
+		</location>
+		<location id="id1" x="-102" y="-68">
+			<name x="-161" y="-110">enAttente</name>
+		</location>
+		<location id="id2" x="34" y="102">
+			<name x="51" y="93">Recoit</name>
+		</location>
+		<location id="id3" x="68" y="-170">
+			<name x="51" y="-204">Appel</name>
+		</location>
+		<location id="id4" x="-246" y="-68">
+			<name x="-256" y="-102">Init</name>
+		</location>
+		<init ref="id4"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-51" y="-102">attente &gt;= 3</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-144" y="68">attente == 5</label>
+			<label kind="synchronisation" x="-144" y="34">reponse!</label>
+			<label kind="assignment" x="-144" y="51">envoie()</label>
+			<nail x="-77" y="51"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="25" y="-25">appel?</label>
+			<label kind="assignment" x="25" y="-8">recoie()</label>
+			<nail x="17" y="-8"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id0"/>
+			<label kind="guard" x="144" y="-161">attente == 5</label>
+			<label kind="synchronisation" x="144" y="-144">reponse?</label>
+			<label kind="assignment" x="144" y="-127">recoie(), attente = 0</label>
+			<nail x="136" y="-136"/>
+			<nail x="136" y="-102"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-110" y="-212">appel!</label>
+			<label kind="assignment" x="-110" y="-195">envoie(), attente = 0</label>
+			<nail x="-34" y="-170"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id1"/>
+			<label kind="assignment" x="-204" y="-68">initialize()</label>
+		</transition>
+	</template>
+	<template>
+		<name>Generique</name>
+		<parameter>int index</parameter>
+		<declaration>// Place local declarations here.
+int tab = 0;
+
+void initialize()
+{
+    tab = 1 &lt;&lt;index;
+}
+
+void envoie() 
+{
+    ech = tab;
+}
+
+void recoie()
+{
+    tab = tab | ech;
+}</declaration>
+		<location id="id5" x="-102" y="-68">
+			<name x="-161" y="-110">enAttente</name>
+		</location>
+		<location id="id6" x="34" y="102">
+			<name x="51" y="93">Recoit</name>
+		</location>
+		<location id="id7" x="68" y="-170">
+			<name x="51" y="-204">Appel</name>
+		</location>
+		<location id="id8" x="-246" y="-68">
+			<name x="-256" y="-102">Init</name>
+		</location>
+		<init ref="id8"/>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-144" y="34">reponse!</label>
+			<label kind="assignment" x="-144" y="51">envoie()</label>
+			<nail x="-77" y="51"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="25" y="-25">appel?</label>
+			<label kind="assignment" x="25" y="-8">recoie()</label>
+			<nail x="17" y="-8"/>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="76" y="-136">reponse?</label>
+			<label kind="assignment" x="76" y="-119">recoie()</label>
+			<nail x="51" y="-110"/>
+			<nail x="42" y="-85"/>
+			<nail x="25" y="-68"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-110" y="-212">appel!</label>
+			<label kind="assignment" x="-110" y="-195">envoie()</label>
+			<nail x="-34" y="-170"/>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id5"/>
+			<label kind="assignment" x="-204" y="-68">initialize()</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+GossipA = Gossip(0);
+GossipB = Gossip(1);
+GossipC = Gossip(2);
+GossipD = Gossip(3);
+// List one or more processes to be composed into a system.
+system GossipA,GossipB,GossipC,GossipD;
+    </system>
+	<queries>
+		<query>
+			<formula>E&lt;&gt;( GossipA.tab ==((2&lt;&lt;n-1) -1)  and  GossipB.tab == ((2&lt;&lt;n-1) -1) and  GossipC.tab == ((2&lt;&lt;n-1) -1) and  GossipD.tab == ((2&lt;&lt;n-1) -1))
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt;( forall (i : int[0,n-1]) GossipA.tab[i] &gt; 0 and forall (i : int[0,n-1]) GossipB.tab[i] &gt; 0 and forall (i : int[0,n-1]) GossipC.tab[i] &gt; 0 and forall (i : int[0,n-1]) GossipD.tab[i] &gt; 0 and forall (i : int[0,n-1]) GossipE.tab[i] &gt; 0 and forall (i : int[0,n-1]) GossipF.tab[i] &gt; 0)
+			</formula>
+			<comment>
+			</comment>
+		</query>
+	</queries>
+</nta>

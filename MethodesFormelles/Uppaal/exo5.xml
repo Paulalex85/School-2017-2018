@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+chan AetB,BetC,AetC;
+int ech[3] = {0,0,0};</declaration>
+	<template>
+		<name x="5" y="5">UserA</name>
+		<declaration>// Place local declarations here.
+int tab[3] = {1,0,0};
+
+void envoie() 
+{
+    for (i : int[0,2])
+    {
+        ech[i] = tab[i];
+    }
+}
+
+void recoie()
+{
+    for (i : int[0,2])
+    {
+        if(ech[i] &gt; 0 )
+        {
+            tab[i] = ech[i];
+        }
+    }
+}</declaration>
+		<location id="id0" x="238" y="-59">
+			<name x="228" y="-93">RepondB</name>
+		</location>
+		<location id="id1" x="0" y="77">
+			<name x="-42" y="94">RepondC</name>
+		</location>
+		<location id="id2" x="-229" y="17">
+			<name x="-289" y="-25">AppelC</name>
+		</location>
+		<location id="id3" x="220" y="-238">
+			<name x="246" y="-246">AppelB</name>
+		</location>
+		<location id="id4" x="0" y="-93">
+			<name x="-42" y="-127">User</name>
+		</location>
+		<init ref="id4"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="111" y="-67">AetB!</label>
+			<label kind="assignment" x="94" y="-84">envoie()</label>
+			<nail x="119" y="-42"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id0"/>
+			<label kind="synchronisation" x="195" y="-110">AetB?</label>
+			<label kind="assignment" x="187" y="-127">recoie()</label>
+			<nail x="161" y="-118"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="170" y="-169">AetB?</label>
+			<label kind="assignment" x="178" y="-186">recoie()</label>
+			<nail x="144" y="-144"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="34" y="1">AetC!</label>
+			<label kind="assignment" x="26" y="17">envoie()</label>
+			<nail x="34" y="9"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="-76" y="26">AetC?</label>
+			<label kind="assignment" x="-85" y="9">recoie()</label>
+			<nail x="-42" y="9"/>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id4"/>
+			<label kind="synchronisation" x="-144" y="-33">AetC?</label>
+			<label kind="assignment" x="-153" y="-50">recoie()</label>
+			<nail x="-102" y="-16"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id2"/>
+			<label kind="synchronisation" x="-195" y="-93">AetC!</label>
+			<label kind="assignment" x="-204" y="-110">envoie()</label>
+			<nail x="-153" y="-76"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="35" y="-212">AetB!</label>
+			<label kind="assignment" x="26" y="-229">envoie()</label>
+			<nail x="77" y="-195"/>
+		</transition>
+	</template>
+	<template>
+		<name>UserB</name>
+		<declaration>// Place local declarations here.
+int tab[3] = {0,1,0};
+
+void envoie() 
+{
+    for (i : int[0,2])
+    {
+        ech[i] = tab[i];
+    }
+}
+
+void recoie()
+{
+    for (i : int[0,2])
+    {
+        if(ech[i] &gt; 0 )
+        {
+            tab[i] = ech[i];
+        }
+    }
+}</declaration>
+		<location id="id5" x="170" y="-25">
+			<name x="160" y="-59">RepondA</name>
+		</location>
+		<location id="id6" x="-68" y="-59">
+			<name x="-110" y="-93">User</name>
+		</location>
+		<location id="id7" x="152" y="-204">
+			<name x="178" y="-212">AppelA</name>
+		</location>
+		<location id="id8" x="-68" y="111">
+			<name x="-110" y="128">RepondC</name>
+		</location>
+		<location id="id9" x="-297" y="51">
+			<name x="-357" y="9">AppelC</name>
+		</location>
+		<init ref="id6"/>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="43" y="-33">AetB!</label>
+			<label kind="assignment" x="26" y="-50">envoie()</label>
+			<nail x="51" y="-8"/>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="127" y="-76">AetB?</label>
+			<label kind="assignment" x="119" y="-93">recoie()</label>
+			<nail x="93" y="-84"/>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="102" y="-135">AetB?</label>
+			<label kind="assignment" x="110" y="-152">recoie()</label>
+			<nail x="76" y="-110"/>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-34" y="35">BetC!</label>
+			<label kind="assignment" x="-42" y="51">envoie()</label>
+			<nail x="-34" y="43"/>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-144" y="60">BetC?</label>
+			<label kind="assignment" x="-153" y="43">recoie()</label>
+			<nail x="-110" y="43"/>
+		</transition>
+		<transition>
+			<source ref="id9"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-212" y="1">BetC?</label>
+			<label kind="assignment" x="-221" y="-16">recoie()</label>
+			<nail x="-170" y="18"/>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id9"/>
+			<label kind="synchronisation" x="-263" y="-59">BetC!</label>
+			<label kind="assignment" x="-272" y="-76">envoie()</label>
+			<nail x="-221" y="-42"/>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-33" y="-178">AetB!</label>
+			<label kind="assignment" x="-42" y="-195">envoie()</label>
+			<nail x="9" y="-161"/>
+		</transition>
+	</template>
+	<template>
+		<name>UserC</name>
+		<declaration>// Place local declarations here.
+int tab[3] = {0,0,1};
+
+void envoie() 
+{
+    for (i : int[0,2])
+    {
+        ech[i] = tab[i];
+    }
+}
+
+void recoie()
+{
+    for (i : int[0,2])
+    {
+        if(ech[i] &gt; 0 )
+        {
+            tab[i] = ech[i];
+        }
+    }
+}</declaration>
+		<location id="id10" x="204" y="9">
+			<name x="194" y="-25">RepondA</name>
+		</location>
+		<location id="id11" x="-34" y="-25">
+			<name x="-76" y="-59">User</name>
+		</location>
+		<location id="id12" x="186" y="-170">
+			<name x="212" y="-178">AppelA</name>
+		</location>
+		<location id="id13" x="-34" y="145">
+			<name x="-76" y="162">RepondB</name>
+		</location>
+		<location id="id14" x="-263" y="85">
+			<name x="-323" y="43">AppelB</name>
+		</location>
+		<init ref="id11"/>
+		<transition>
+			<source ref="id10"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="77" y="1">AetC!</label>
+			<label kind="assignment" x="60" y="-16">envoie()</label>
+			<nail x="85" y="26"/>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id10"/>
+			<label kind="synchronisation" x="161" y="-42">AetC?</label>
+			<label kind="assignment" x="153" y="-59">recoie()</label>
+			<nail x="127" y="-50"/>
+		</transition>
+		<transition>
+			<source ref="id12"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="136" y="-101">AetC?</label>
+			<label kind="assignment" x="144" y="-118">recoie()</label>
+			<nail x="110" y="-76"/>
+		</transition>
+		<transition>
+			<source ref="id13"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="0" y="69">BetC!</label>
+			<label kind="assignment" x="-8" y="85">envoie()</label>
+			<nail x="0" y="77"/>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id13"/>
+			<label kind="synchronisation" x="-110" y="94">BetC?</label>
+			<label kind="assignment" x="-119" y="77">recoie()</label>
+			<nail x="-76" y="77"/>
+		</transition>
+		<transition>
+			<source ref="id14"/>
+			<target ref="id11"/>
+			<label kind="synchronisation" x="-178" y="35">BetC?</label>
+			<label kind="assignment" x="-187" y="18">recoie()</label>
+			<nail x="-136" y="52"/>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id14"/>
+			<label kind="synchronisation" x="-229" y="-25">BetC!</label>
+			<label kind="assignment" x="-238" y="-42">envoie()</label>
+			<nail x="-187" y="-8"/>
+		</transition>
+		<transition>
+			<source ref="id11"/>
+			<target ref="id12"/>
+			<label kind="synchronisation" x="1" y="-144">AetC!</label>
+			<label kind="assignment" x="-8" y="-161">envoie()</label>
+			<nail x="43" y="-127"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+GossipA = UserA();
+GossipB = UserB();
+GossipC = UserC();
+// List one or more processes to be composed into a system.
+system GossipA,GossipB,GossipC;
+    </system>
+	<queries>
+		<query>
+			<formula>E&lt;&gt;( forall (i : int[0,n-1]) GossipA.tab[i] &gt; 0 and forall (i : int[0,n-1]) GossipB.tab[i] &gt; 0 and forall (i : int[0,n-1]) GossipC.tab[i] &gt; 0 and forall (i : int[0,n-1]) GossipD.tab[i] &gt; 0 and forall (i : int[0,n-1]) GossipE.tab[i] &gt; 0 and forall (i : int[0,n-1]) GossipF.tab[i] &gt; 0)
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt;(GossipA.tab[0] &gt; 0 and GossipA.tab[1] &gt; 0 and GossipA.tab[2] &gt; 0 and GossipB.tab[0] &gt; 0 and GossipB.tab[1] &gt; 0 and GossipB.tab[2] &gt; 0 and GossipC.tab[0] &gt; 0 and GossipC.tab[1] &gt; 0 and GossipC.tab[2] &gt; 0)
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt;( ProcessA.tab[0] &gt; 0 and ProcessA.tab[1] &gt; 0  and ProcessA.tab[2] &gt; 0  and ProcessB.tab[0] &gt; 0 and ProcessB.tab[1] &gt; 0  and ProcessB.tab[2] &gt; 0 and ProcessC.tab[0] &gt; 0 and ProcessC.tab[1] &gt; 0  and ProcessC.tab[2] &gt; 0)
+			</formula>
+			<comment>
+			</comment>
+		</query>
+	</queries>
+</nta>

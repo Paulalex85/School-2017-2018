@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+int[1,2] turn;
+int[0,1] req1 = 1;
+int[0,1] req2 = 1;</declaration>
+	<template>
+		<name>Temp</name>
+		<parameter>const int[1,2] me, int[0,1] &amp;reqself, int[0,1] &amp;reqother</parameter>
+		<location id="id0" x="-1096" y="-297">
+			<name x="-1130" y="-305">CS</name>
+			<urgent/>
+		</location>
+		<location id="id1" x="-1096" y="-501">
+			<name x="-1106" y="-535">iddle</name>
+			<urgent/>
+		</location>
+		<location id="id2" x="-858" y="-297">
+			<name x="-832" y="-314">wait</name>
+			<urgent/>
+		</location>
+		<location id="id3" x="-858" y="-501">
+			<name x="-868" y="-535">want</name>
+			<urgent/>
+		</location>
+		<init ref="id1"/>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="assignment" x="-1181" y="-416">reqself = 0</label>
+		</transition>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-1062" y="-271">turn== me or reqother == 0</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="assignment" x="-849" y="-407">turn = me == 1 ? 2 : 1</label>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id3"/>
+			<label kind="assignment" x="-1011" y="-535">reqself = 1</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+P1 = Temp(1,req1,req2);
+P2 = Temp(2,req2,req1);
+// List one or more processes to be composed into a system.
+system P1,P2;
+    </system>
+	<queries>
+		<query>
+			<formula>P1.want--&gt;P1.CS
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt;(P1.CS and P2.CS)
+			</formula>
+			<comment>
+			</comment>
+		</query>
+	</queries>
+</nta>

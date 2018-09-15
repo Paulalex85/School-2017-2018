@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+clock x;
+chan press, click, double_click;</declaration>
+	<template>
+		<name x="5" y="5">User</name>
+		<declaration>// Place local declarations here.</declaration>
+		<location id="id0" x="170" y="0">
+			<name x="160" y="-34">DoubleClick</name>
+		</location>
+		<location id="id1" x="170" y="-136">
+			<name x="160" y="-170">UnClick</name>
+		</location>
+		<location id="id2" x="170" y="-272">
+			<name x="160" y="-306">AttendDouble</name>
+		</location>
+		<location id="id3" x="-340" y="-204">
+			<name x="-451" y="-238">AttendSimple</name>
+		</location>
+		<location id="id4" x="-340" y="0">
+			<name x="-375" y="17">SimpleClick</name>
+		</location>
+		<location id="id5" x="-102" y="0">
+			<name x="-112" y="-34">Init</name>
+		</location>
+		<init ref="id5"/>
+		<transition>
+			<source ref="id2"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-84" y="-153">double_click?</label>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="guard" x="178" y="-238">x &lt;= 3</label>
+			<label kind="synchronisation" x="178" y="-221">press!</label>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="synchronisation" x="187" y="-85">press!</label>
+			<label kind="assignment" x="187" y="-68">x = 0</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-255" y="-161">click?</label>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="synchronisation" x="-391" y="-110">press!</label>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id4"/>
+		</transition>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id0"/>
+		</transition>
+	</template>
+	<template>
+		<name>Souris</name>
+		<location id="id6" x="204" y="-136">
+		</location>
+		<location id="id7" x="-34" y="-136">
+		</location>
+		<location id="id8" x="-34" y="68">
+		</location>
+		<init ref="id8"/>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="-187" y="-59">click!</label>
+			<nail x="-127" y="-42"/>
+		</transition>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id8"/>
+			<label kind="synchronisation" x="119" y="-51">double_click!</label>
+		</transition>
+		<transition>
+			<source ref="id7"/>
+			<target ref="id6"/>
+			<label kind="guard" x="51" y="-187">x &lt;= 3</label>
+			<label kind="synchronisation" x="51" y="-170">press?</label>
+		</transition>
+		<transition>
+			<source ref="id8"/>
+			<target ref="id7"/>
+			<label kind="synchronisation" x="-17" y="-76">press?</label>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+U = User();
+S = Souris();
+// List one or more processes to be composed into a system.
+system U,S;
+    </system>
+	<queries>
+		<query>
+			<formula>U.DoubleClick --&gt; U.Init
+			</formula>
+			<comment>
+			</comment>
+		</query>
+	</queries>
+</nta>
