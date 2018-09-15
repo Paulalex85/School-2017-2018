@@ -10,3 +10,6 @@
 [submodule "app-suivi-alimentaire"]
 	path = app-suivi-alimentaire
 	url = https://github.com/AnasseZ/app-suivi-alimentaire
+[submodule "BattleMiage"]
+	path = BattleMiage
+	url = https://github.com/Paulalex85/BattleMiage
